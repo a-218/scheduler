@@ -10,14 +10,14 @@ export default function InterviewerListItem(props) {
  });
 
   return ( 
-    <li className={interClass} onClick={() => props.setInterviewer(props.name)}>
+    <li className={interClass} onClick={ props.setInterviewer}>
         <img
-          key = {props.id}
+      
           className="interviewers__item-image"
           src={props.avatar}
           alt={props.name}
         />
-        {props.name }
+       {props.selected && props.name}
       </li>
 
 
