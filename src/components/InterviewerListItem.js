@@ -10,7 +10,7 @@ export default function InterviewerListItem(props) {
  });
 
   return ( 
-    <li className={interClass} onClick={ props.setInterviewer}>
+    <li className={interClass} onClick={props.setInterviewer}>
         <img
       
           className="interviewers__item-image"
