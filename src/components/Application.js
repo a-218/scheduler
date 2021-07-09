@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import DayList from "components/DayList";
 import "components/Application.scss";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview , getInterviewersForDay} from "helpers/selectors";
 const axios = require("axios");
 
 
@@ -75,6 +75,8 @@ export default function Application(props) {
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
+  const dailyInterviewers = getInterviewersForDay(state, state.day);
+  console.log('daily interviewers', dailyInterviewers);
   const setDay = day => setState({ ...state, day });
   
   const schedule = dailyAppointments.map((appointment) => {
@@ -86,6 +88,7 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={dailyInterviewers}
       />
     );
   });
@@ -132,8 +135,16 @@ export default function Application(props) {
       <section className="schedule">
         {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
 
-        {dailyAppointments.map((appointment) => (<Appointment key={appointment.id} {...appointment} />))}
-        <Appointment key="last" time="5pm" />
+        {dailyAppointments.map((appointment) => (
+        <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={appointment.interview}
+        interviewers={dailyInterviewers}
+         />))}
+
+<Appointment key="last" time="5pm" />
 
 
       </section>

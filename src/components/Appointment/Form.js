@@ -4,7 +4,7 @@ import Button from "components/Button";
 
 
 export default function Form(props) {
-  console.log('$$$$$$$$$$$$$$$$', props);
+
   console.log('the name over here ', props.name);
 
 

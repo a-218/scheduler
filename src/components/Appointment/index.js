@@ -22,7 +22,7 @@ export default function Appointment(props) {
           props.interview ? SHOW : EMPTY
      );
 
-     console.log('***************', props);
+     console.log('INDEX JS APPOINTMENT ***************', props);
 
 
      return (<article className="appointment">
@@ -34,7 +34,7 @@ export default function Appointment(props) {
       
                />)
           }
-          {mode === CREATE && ( <Form interviewers={[]} onCancel={back} />)}
+          {mode === CREATE && ( <Form interviewers={props.interviewers} onCancel={back} />)}
 
          
      </article>
