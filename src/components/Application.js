@@ -3,162 +3,22 @@ import DayList from "components/DayList";
 import "components/Application.scss";
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import useApplicationData from "hooks/useApplicationData";
+
 const axios = require("axios");
 
-
-// const days = [
-//   {
-//     id: 1,
-//     name: "Monday",
-//     spots: 2,
-//   },
-//   {
-//     id: 2,
-//     name: "Tuesday",
-//     spots: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Wednesday",
-//     spots: 0,
-//   },
-// ];
-
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm",
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 3,
-//     time: "5pm",
-//     interview: {
-//       student: "Lydia ",
-//       interviewer: {
-//         id: 2,
-//         name: "Tori Malcolm",
-//         avatar: "https://i.imgur.com/Nmx0Qxo.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 4,
-//     time: "9am",
-//   },
-//   {
-//     id: 5,
-//     time: "11pm",
-//   }
-// ];
 
 
 
 export default function Application(props) {
-  const [state, setState] = useState(
-    {
-      day: "Monday",
-      days: [],
-      appointments: {
-        "1": {
-          id: 1,
-          time: "12pm",
-          interview: null
-        }
-      },
-      interviewers: {}
-    }
+  
 
-
-    // {
-    // day: 'Monday',
-    // days: [],
-    // appointments: {}
-    // }
-  );
-
-
+  const { state, setDay, bookInterview, cancelInterview } =
+  useApplicationData();
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const dailyInterviewers = getInterviewersForDay(state, state.day);
-
-  const setDay = day => setState({ ...state, day });
-
-
-function bookInterview(id, interview) {    // async function with index .js async function to wait for api responce
-
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-
-     return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
-      .then(response => {
-        setState({
-          ...state,
-          appointments
-        });
-       return response;
-   
-      })
-      // .catch(error => {
-      //   console.log(error);
-    
-      // });
-      
-  }
-
-
-
- function cancelInterview(id, interview) {    
-
- 
-    const appointment = {
-      ...state.appointments[id],
-      interview:{ ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-
-   return axios.delete(`http://localhost:8001/api/appointments/${id}`)
-      .then(response => {
-        setState({
-          ...state,
-          appointments
-        });
-        return response;
-      })
-      // .catch(error => {
-      //   console.log(error);
-  
-      // });
-      
-  }
-
-
 
 
   const schedule = dailyAppointments.map((appointment) => {
@@ -172,25 +32,10 @@ function bookInterview(id, interview) {    // async function with index .js asyn
         interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
-        cancelInterview ={cancelInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
-
-  //const interview = getInterview(state, appointment.interview);
-
-  useEffect(() => {
-    Promise.all([
-      axios.get('http://localhost:8001/api/days'),
-      axios.get('http://localhost:8001/api/appointments'),
-      axios.get('http://localhost:8001/api/interviewers')
-    ]).then((all) => {
-
-      setState(prev => (
-        console.log('prev over ', prev),
-        { ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }))
-    })
-  }, [])
 
   return (
     <main className="layout">
