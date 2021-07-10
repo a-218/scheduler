@@ -97,7 +97,7 @@ export default function Application(props) {
   const setDay = day => setState({ ...state, day });
 
 
-  async function bookInterview(id, interview) {    // async function with index .js async function to wait for api responce
+function bookInterview(id, interview) {    // async function with index .js async function to wait for api responce
 
 
     const appointment = {
@@ -111,7 +111,7 @@ export default function Application(props) {
     };
 
 
-    const response = await axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
+     return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview})
       .then(response => {
         setState({
           ...state,
@@ -124,16 +124,12 @@ export default function Application(props) {
         console.log(error);
         return false;
       });
-      if(response === true){
-        return true;
-      } else{
-        return false;
-      }
+      
   }
 
 
 
-  async function cancelInterview(id, interview) {    
+ function cancelInterview(id, interview) {    
 
  
     const appointment = {
@@ -147,7 +143,7 @@ export default function Application(props) {
     };
 
 
-    const response = await axios.delete(`http://localhost:8001/api/appointments/${id}`)
+   return axios.delete(`http://localhost:8001/api/appointments/${id}`)
       .then(response => {
         setState({
           ...state,
@@ -160,11 +156,7 @@ export default function Application(props) {
         console.log(error);
         return false;
       });
-      if(response === true){
-        return true;
-      } else{
-        return false;
-      }
+      
   }
 
 

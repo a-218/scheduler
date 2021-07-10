@@ -29,7 +29,7 @@ export default function Appointment(props) {
 
      console.log('INDEX JS APPOINTMENT ***************', props);
 
-     async function save(name, interviewer) {
+    function save(name, interviewer) {
 
           transition(SAVING);
 
@@ -38,17 +38,20 @@ export default function Appointment(props) {
             interviewer
           };
           
-         const response = await props.bookInterview(props.id, interview)
-         if (response === true){
-         transition(SHOW);
-         }
+         props.bookInterview(props.id, interview)
+         .then(()=>{
+          transition(SHOW);
+         })
+
+        
      }
+     
 
 
      console.log('props over here are', props)
 
 
-     async function cancel(name, interviewer) {
+     function cancel(name, interviewer) {
 
           transition(DELETING);
 
@@ -57,10 +60,11 @@ export default function Appointment(props) {
           //   interviewer
           // };
           const interview = null;
-         const response = await props.cancelInterview(props.id, interview)
-         if (response === true){
-         transition(EMPTY);
-         }
+          props.cancelInterview(props.id, interview)
+          .then(()=> {
+               transition(EMPTY); 
+          })
+  
      }
 
      return (<article className="appointment">
