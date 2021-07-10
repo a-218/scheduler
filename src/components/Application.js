@@ -97,7 +97,7 @@ export default function Application(props) {
   const setDay = day => setState({ ...state, day });
 
 
-  async function bookInterview(id, interview) {
+  async function bookInterview(id, interview) {    // async function with index .js async function to wait for api responce
     console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$!!!!!!!!!!!!!!!!!!!!!!', id, interview);
 
     const appointment = {
