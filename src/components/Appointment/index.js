@@ -8,7 +8,7 @@ import Show from "components/Appointment/Show";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
-
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 
@@ -21,6 +21,10 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
+
+
 
 export default function Appointment(props) {
 
@@ -43,6 +47,9 @@ export default function Appointment(props) {
          .then(()=>{
           transition(SHOW);
          })
+         .catch (()=>{
+              transition(ERROR_SAVE,true)
+         })
 
         
      }
@@ -52,18 +59,21 @@ export default function Appointment(props) {
      console.log('props over here are', props)
 
 
-     function cancel(name, interviewer) {
+     function cancel() {
 
-          transition(DELETING);
+          transition(DELETING, true);
 
           // const interview = {
           //   student: name,
           //   interviewer
           // };
-          const interview = null;
-          props.cancelInterview(props.id, interview)
+          //const interview = null;
+          props.cancelInterview(props.id)
           .then(()=> {
                transition(EMPTY); 
+          })
+          .catch (()=>{
+               transition(ERROR_DELETE, true);
           })
   
      }
@@ -83,6 +93,11 @@ export default function Appointment(props) {
           {mode === DELETING && <Status message = "Deleting"/>}
           {mode === CONFIRM && <Confirm  message = "Are you sure you would like to delete" onCancel={back} onConfirm = {cancel}/>}
           {mode === EDIT && <Form name={props.interview.student} interviewers={props.interviewers} interviewer={props.interview.interviewer.id}  onCancel={back} onSave={save}/>}
+
+          {mode === ERROR_SAVE && <Error message="Could not cancel appointment" onClose={back}  />}
+
+          {mode === ERROR_DELETE && <Error message="Could not cancel appointment" onClose={back}   />}
+
      </article>
      )
 };

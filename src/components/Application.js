@@ -117,13 +117,13 @@ function bookInterview(id, interview) {    // async function with index .js asyn
           ...state,
           appointments
         });
-        console.log(response);
-        return true;
+       return response;
+   
       })
-      .catch(error => {
-        console.log(error);
-        return false;
-      });
+      // .catch(error => {
+      //   console.log(error);
+    
+      // });
       
   }
 
@@ -149,13 +149,12 @@ function bookInterview(id, interview) {    // async function with index .js asyn
           ...state,
           appointments
         });
-        console.log(response);
-        return true;
+        return response;
       })
-      .catch(error => {
-        console.log(error);
-        return false;
-      });
+      // .catch(error => {
+      //   console.log(error);
+  
+      // });
       
   }
 

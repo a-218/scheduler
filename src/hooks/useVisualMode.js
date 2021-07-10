@@ -8,15 +8,15 @@ export default function useVisualMode(initial) {
   const transition = function(newMode, replace = false){
     
     if(replace === true) {
-      const tempHistory = [...history];
-      tempHistory[tempHistory.length - 1] = newMode
+       const tempHistory = [...history];
+      // tempHistory[tempHistory.length - 1] = newMode
+      tempHistory.pop();
+      
+      setHistory(prev => ([...tempHistory, newMode]));
       setMode(newMode);
-      setHistory(tempHistory);
     } else {
-      setMode(newMode);    
-      const newHistory = [...history, newMode];
-      setHistory(newHistory);
-  
+      setHistory(prev => ([...prev, newMode]));
+      setMode(newMode);
     }
 
    
@@ -26,16 +26,10 @@ export default function useVisualMode(initial) {
 
   const back = function () {
 
-    const tempHistory = [...history];
-  
-    if(tempHistory.length > 1){
-      tempHistory.pop()
+    if (history.length > 1) {
+      history.pop();
+      setMode(history[history.length-1]);
     }
-   
-    //console.log('temp', tempHistory);
-    setHistory(tempHistory);
-    setMode(tempHistory[tempHistory.length-1]);
-
     
   }
 
