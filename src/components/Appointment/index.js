@@ -6,6 +6,7 @@ import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Form from "./Form";
+import Status from "./Status";
 
 import useVisualMode from "hooks/useVisualMode";
 
@@ -14,7 +15,8 @@ import useVisualMode from "hooks/useVisualMode";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
-
+//const SAVE = "SAVE";
+const SAVING = "SAVING";
 
 export default function Appointment(props) {
 
@@ -23,6 +25,25 @@ export default function Appointment(props) {
      );
 
      console.log('INDEX JS APPOINTMENT ***************', props);
+
+     async function save(name, interviewer) {
+          console.log('ssssss')
+          transition(SAVING);
+          console.log('ssssssss')
+          const interview = {
+            student: name,
+            interviewer
+          };
+          
+          
+
+         const response = await props.bookInterview(props.id, interview)
+         if (response === true){
+         transition(SHOW);
+         }
+     }
+
+     console.log('props over here are', props)
 
 
      return (<article className="appointment">
@@ -34,9 +55,9 @@ export default function Appointment(props) {
       
                />)
           }
-          {mode === CREATE && ( <Form interviewers={props.interviewers} onCancel={back} />)}
+          {mode === CREATE && ( <Form interviewers={props.interviewers} onCancel={back} onSave={save}/>)}
+          {mode === SAVING && <Status message = "Saving"/>}
 
-         
      </article>
      )
 };
