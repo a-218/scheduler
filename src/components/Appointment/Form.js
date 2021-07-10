@@ -5,7 +5,9 @@ import Button from "components/Button";
 
 export default function Form(props) {
 
-  console.log('the name over here ', props.name);
+
+  console.log('props when pressed the edit button', props)
+  console.log('the name over here ', props.name); 
 
 
   console.log('the interviewer', props.interviewer);
