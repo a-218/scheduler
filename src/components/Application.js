@@ -88,17 +88,17 @@ export default function Application(props) {
     // }
   );
 
-  console.log('at application over herer //////////////')
+
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const dailyInterviewers = getInterviewersForDay(state, state.day);
-  console.log('daily interviewers', dailyInterviewers);
+
   const setDay = day => setState({ ...state, day });
 
 
   async function bookInterview(id, interview) {    // async function with index .js async function to wait for api responce
-    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$!!!!!!!!!!!!!!!!!!!!!!', id, interview);
+
 
     const appointment = {
       ...state.appointments[id],
@@ -133,6 +133,43 @@ export default function Application(props) {
 
 
 
+  async function cancelInterview(id, interview) {    
+
+ 
+    const appointment = {
+      ...state.appointments[id],
+      interview:{ ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+
+    const response = await axios.delete(`http://localhost:8001/api/appointments/${id}`)
+      .then(response => {
+        setState({
+          ...state,
+          appointments
+        });
+        console.log(response);
+        return true;
+      })
+      .catch(error => {
+        console.log(error);
+        return false;
+      });
+      if(response === true){
+        return true;
+      } else{
+        return false;
+      }
+  }
+
+
+
+
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 
@@ -144,6 +181,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
+        cancelInterview ={cancelInterview}
       />
     );
   });
@@ -187,13 +225,8 @@ export default function Application(props) {
       </section>
 
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
-
         {schedule}
-
         <Appointment key="last" time="5pm" />
-
-
       </section>
     </main>
 
