@@ -41,19 +41,45 @@ export default function useApplicationData() {
   function bookInterview(id, interview) {    // async function with index .js async function to wait for api responce
 
 
+
+    console.log('ddsfdsfds', id,  '8****************', interview);
+    
+    
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
+
+    console.log('THE sTATE', state);
+
 
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
 
+    console.log('appointments form being [pass back', appointments)
+    //state.day is the current day
+
+    let dayArrayId = 0; 
+    for( const day in state.days){
+      if (state.days[day].name === state.day) {
+
+        console.log('this is day', state.days[day].name, 'with the current day, ',state.day, 'with spots', state.days[day].spots)
+        dayArrayId  = day; //which array index of day need to be changed for the spot update
+      
+      }
+  
+    }
+    console.log('after the iteration', state.days, 'and the ', dayArrayId)
+ 
 
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(response => {
+        if (state.appointments[id].interview === null){
+          const days = state.days;
+          days[dayArrayId].spots -= 1;
+        }
         setState({
           ...state,
           appointments
@@ -69,7 +95,7 @@ export default function useApplicationData() {
 
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: null
     };
 
     const appointments = {
@@ -78,11 +104,20 @@ export default function useApplicationData() {
     };
 
 
+    let dayId = 0;
+    for (const day in state.days) {
+      if (state.days[day].name === state.day) {
+        dayId = day;
+      }
+    }
+
     return axios.delete(`http://localhost:8001/api/appointments/${id}`)
       .then(response => {
+        const days = state.days;
+        days[dayId].spots += 1;
         setState({
           ...state,
-          appointments
+          appointments,
         });
         return response;
       })
