@@ -8,9 +8,7 @@ import PropTypes from 'prop-types';
 
 
 export default function InterviewerList(props) {
-  console.log('props over here', props);
-
-
+ 
   const interviewMap =props.interviewers.map( interviewer => {
    
     return ( 

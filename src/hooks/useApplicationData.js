@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
-  
+
   const [state, setState] = useState(
     {
       day: "Monday",
@@ -17,7 +17,6 @@ export default function useApplicationData() {
       },
       interviewers: {}
     }
-
   );
 
   const setDay = day => setState({ ...state, day });
@@ -71,15 +70,11 @@ export default function useApplicationData() {
           days: newdays
 
         });
-
         return response;
-
       })
   };
 
   function cancelInterview(id, interview) {
-
-
     const appointment = {
       ...state.appointments[id],
       interview: null

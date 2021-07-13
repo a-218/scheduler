@@ -8,11 +8,9 @@ export default function InterviewerListItem(props) {
    const interClass = classnames("interviewers__item", {
     "interviewers__item--selected": props.selected
  });
-
   return ( 
     <li className={interClass} onClick={props.setInterviewer}>
         <img
-      
           className="interviewers__item-image"
           src={props.avatar}
           alt={props.name}
@@ -22,12 +20,4 @@ export default function InterviewerListItem(props) {
 
 
   )
-//   <li className="interviewers__item">
-//   <img
-//     className="interviewers__item-image"
-//     src={props.avatar}
-//     alt="Sylvia Palmer"
-//   />
-//   {props.name}
-// </li>
 }
