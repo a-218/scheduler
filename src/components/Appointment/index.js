@@ -16,7 +16,6 @@ import useVisualMode from "hooks/useVisualMode";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
-//const SAVE = "SAVE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
@@ -31,8 +30,6 @@ export default function Appointment(props) {
      const { mode, transition, back } = useVisualMode(
           props.interview ? SHOW : EMPTY
      );
-
-     console.log('INDEX JS APPOINTMENT ***************', props);
 
     function save(name, interviewer) {
 
@@ -54,20 +51,10 @@ export default function Appointment(props) {
         
      }
      
-
-
-     console.log('props over here are', props)
-
-
      function cancel() {
 
           transition(DELETING, true);
 
-          // const interview = {
-          //   student: name,
-          //   interviewer
-          // };
-          //const interview = null;
           props.cancelInterview(props.id)
           .then(()=> {
                transition(EMPTY); 
