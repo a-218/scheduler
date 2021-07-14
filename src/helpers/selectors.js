@@ -35,7 +35,7 @@ export function getInterview(state, interview) {
   const interviewerId = interview.interviewer;
 
   let student = interview.student;
-  console.log(state.interviewers);
+
   let interviewerObject = state.interviewers[interviewerId]
 
   let result = {
