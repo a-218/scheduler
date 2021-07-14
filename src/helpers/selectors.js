@@ -29,9 +29,6 @@ export function getInterview(state, interview) {
     return null;
   }
 
-
-
-
   const interviewerId = interview.interviewer;
 
   let student = interview.student;

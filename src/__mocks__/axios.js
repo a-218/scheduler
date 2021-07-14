@@ -84,16 +84,24 @@ export default {
     }
   }),
 
-  put: jest.fn((url,item) => {
-  
+  put: jest.fn((url) => {
 
-    if (url === `http://localhost:8001/api/appointments/${fixtures.appointments["1"].id}`) {
-      /* Resolve appointments data */
+
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content",
+    });
+  }),
+
+  delete: jest.fn((url) => {
+
       return Promise.resolve({
         status: 204,
         statusText: "No Content",
-       
       });
-    }
-  })
+
+  
+  }),
+
+
 };
