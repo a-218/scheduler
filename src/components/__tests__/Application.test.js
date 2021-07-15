@@ -122,7 +122,7 @@ describe("appointment", () => {
 
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
-    // // 7. Check that the DayListItem with the text "Monday" spots remaining for Monday the same".
+    // // 7. Check that the DayListItem with the text "Monday" spots remaining for Monday is 1".
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
@@ -132,7 +132,6 @@ describe("appointment", () => {
 
   it("shows the save error when failing to save an appointment", async () => {
 
- 
     // 1. Render the Application.
     const { container ,debug} = render(<Application />);
     // 2. Wait until the text "Archie Cohen" is displayed.
@@ -150,8 +149,8 @@ describe("appointment", () => {
       target: { value: "Lydia Miller-Jones" }
     });
 
-
     axios.put.mockRejectedValueOnce();
+
     // 5. Click the "Confirm" button on the confirmation.
     fireEvent.click(getByText(appointment, "Save"));
 
@@ -161,24 +160,15 @@ describe("appointment", () => {
 
     await waitForElement(() => getByText(container,"Could not save appointment"));
 
-    // // 7. Check that the DayListItem with the text "Monday" spots remaining for Monday the same".
-    // const msg = getAllByTestId(container, "message").find(day =>
-    //   queryByText(msg, "Could not save appointment")
-    // );
     expect(getByText(appointment, "Could not save appointment")).toBeInTheDocument();
-
-
-
-
   });
-
-
 
    it("shows the delete error when failing to delete an existing appointment", async () => {
 
 
     // 1. Render the Application.
     const { container ,debug} = render(<Application />);
+
     // 2. Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
@@ -202,11 +192,5 @@ describe("appointment", () => {
    
     expect(getByText(appointment, "Could not cancel appointment")).toBeInTheDocument();
 
-
-
-
    });
-
-
-
 });

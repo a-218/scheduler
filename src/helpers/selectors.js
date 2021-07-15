@@ -12,8 +12,7 @@
   if (filteredDay.length === 0) {
     return [];
   }
-
-
+  
   for (const id of filteredDay[0].appointments) {
     result.push(state.appointments[id])
   }

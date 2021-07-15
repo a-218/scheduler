@@ -53,9 +53,10 @@ export default function useApplicationData() {
     for (const day in newdays) {
       if (newdays[day].name === state.day) {
 
-        dayArrayId = day; //which array index of day need to be changed for the spot update
+        dayArrayId = day; 
       }
     }
+    
     return axios.put(`http://localhost:8001/api/appointments/${id}`, { interview })
       .then(response => {
 
@@ -91,7 +92,7 @@ export default function useApplicationData() {
     for (const day in newdays) {
       if (newdays[day].name === state.day) {
 
-        dayArrayId = day; //which array index of day need to be changed for the spot update
+        dayArrayId = day;
       }
     }
 
